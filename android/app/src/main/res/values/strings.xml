@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ergo</string>
+    <string name="title_activity_main">Ergo</string>
+    <string name="package_name">com.ergo.healthcare</string>
+    <string name="custom_url_scheme">com.ergo.healthcare</string>
+</resources>
