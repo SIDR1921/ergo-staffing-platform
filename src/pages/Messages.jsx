@@ -7,7 +7,7 @@ const itemV = { hidden: { y: 20, opacity: 0 }, visible: { y: 0, opacity: 1, tran
 
 const MOCK_THREADS = [
   { id: 1, name: 'Memorial Hospital', role: 'facility', lastMsg: 'Your shift on May 15 has been confirmed. Please arrive 15 minutes early.', time: '2:30 PM', unread: 2 },
-  { id: 2, name: 'Ergo Support', role: 'admin', lastMsg: 'Your credential verification is complete. You are now shift-ready!', time: '11:15 AM', unread: 0 },
+  { id: 2, name: 'PRN Float Support', role: 'admin', lastMsg: 'Your credential verification is complete. You are now shift-ready!', time: '11:15 AM', unread: 0 },
   { id: 3, name: 'City Medical Center', role: 'facility', lastMsg: 'We have an urgent overnight shift available. Are you interested?', time: 'Yesterday', unread: 1 },
   { id: 4, name: 'Sunrise Care', role: 'facility', lastMsg: 'Thank you for your excellent work last week. We would love to have you back.', time: 'May 12', unread: 0 },
 ];

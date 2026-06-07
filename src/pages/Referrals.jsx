@@ -13,8 +13,8 @@ const MOCK_REFERRALS = [
 
 export default function Referrals() {
   const [copied, setCopied] = useState(false);
-  const referralCode = 'ERGO-SJ2026';
-  const referralLink = `https://ergo.health/join?ref=${referralCode}`;
+  const referralCode = 'PRNFLOAT-SJ2026';
+  const referralLink = `https://prnfloat.com/join?ref=${referralCode}`;
 
   const copyCode = () => { navigator.clipboard?.writeText(referralLink); setCopied(true); setTimeout(() => setCopied(false), 2000); };
 

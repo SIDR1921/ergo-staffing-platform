@@ -1,16 +1,49 @@
-# React + Vite
+# PRN Float — AI Healthcare Staffing
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+PRN Float is an AI-native healthcare staffing marketplace connecting clinicians and contractors
+(Nursing, EMS, NEMT, Rehab, DSP / Home Care, Allied Health) with facilities for on-demand and float-pool
+shifts — with automated credentialing, EVV, compliance, and same-day pay.
 
-Currently, two official plugins are available:
+- **Web:** React 19 + Vite, deployed on Firebase Hosting → **prnfloat.com**
+- **Backend:** Firebase Cloud Functions (NPI verification, resume OCR, Stripe Connect, SignNow e-sign,
+  AI concierge), Firestore, Storage
+- **Native:** Capacitor (iOS / Android)
+- **Support:** support@ergoconscious.com
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Quick start
+```bash
+npm install
+npm run dev        # http://localhost:5173
+npm run build      # production bundle → dist/
+npm run lint
+```
 
-## React Compiler
+Create a `.env` with your Firebase web config (read in `src/lib/firebase.js`):
+```
+VITE_FIREBASE_API_KEY=...
+VITE_FIREBASE_AUTH_DOMAIN=...
+VITE_FIREBASE_PROJECT_ID=...
+VITE_FIREBASE_STORAGE_BUCKET=...
+VITE_FIREBASE_MESSAGING_SENDER_ID=...
+VITE_FIREBASE_APP_ID=...
+VITE_FIREBASE_MEASUREMENT_ID=...
+```
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Project layout
+| Path | What |
+|---|---|
+| `src/pages/` | Routed screens (Landing, Login, Onboarding, dashboards, etc.) |
+| `src/components/` | Shared UI — incl. `Logo.jsx` (brand mark) and the design-system `brutal-*` classes |
+| `src/contexts/AuthContext.jsx` | Firebase auth + profile/role |
+| `functions/index.js` | Cloud Functions (NPI, resume OCR, Stripe Connect, SignNow, concierge) |
+| `agreements/` | Contractor legal packet (signed during onboarding) |
+| `docs/` | Product spec (`AI-Healthcare-Staffing-User-Journey.docx`) + `GAP_ANALYSIS.md` |
 
-## Expanding the ESLint configuration
+## Branding
+- Wordmark: **PRN Float** · Logo: "Pulse + Float wave" mark (`src/components/Logo.jsx`,
+  `public/favicon.svg`, `public/og-image.svg`)
+- Palette: accent `#B0A4E5` → `#8475C8`, ink `#2D2A3E`, fonts Outfit + Plus Jakarta Sans
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Deploying
+See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for the prnfloat.com custom-domain, DNS, function env, and
+Stripe/SignNow setup. The current gap roadmap is in [`docs/GAP_ANALYSIS.md`](./docs/GAP_ANALYSIS.md).

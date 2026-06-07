@@ -1,6 +1,6 @@
 {
   "appId": "com.ergo.healthcare",
-  "appName": "Ergo",
+  "appName": "PRN Float",
   "webDir": "dist",
   "server": {
     "url": "http://localhost:5173",

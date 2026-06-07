@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Activity, ShieldCheck, Key, Lock } from 'lucide-react';
+import { ShieldCheck, Key, Lock } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from '../components/Logo';
 import { auth, db } from '../lib/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
@@ -85,10 +86,7 @@ export default function Login() {
       <div className="grid-bg"></div>
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="brutal-card" style={{ width: '100%', maxWidth: '480px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-md)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '1rem 2rem', border: '2px solid var(--color-border)', boxShadow: '4px 4px 0px var(--color-border)' }}>
-            <Activity size={32} strokeWidth={3} />
-            <h1 style={{ fontSize: '2rem', margin: 0 }}>ERGO</h1>
-          </div>
+          <Logo size={48} />
         </div>
 
         <h2 style={{ fontSize: '1.5rem', textAlign: 'center', marginBottom: '0.5rem' }}>

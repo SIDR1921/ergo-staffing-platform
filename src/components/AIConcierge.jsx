@@ -28,9 +28,9 @@ async function getAIResponse(messages) {
     } else if (lastMsg.includes('pay')) {
       return "Direct deposit is issued within 24-48 hours of a completed shift. Instant Pay enabled shifts receive funds within 2 hours.";
     } else if (lastMsg.includes('human') || lastMsg.includes('person')) {
-      return "You can contact human support at support@ergo.health or call (555) 123-4567 (8AM-8PM EST).";
+      return "You can contact human support at support@ergoconscious.com or call (555) 123-4567 (8AM-8PM EST).";
     } else if (lastMsg.includes('lab')) {
-      return "Please visit Quest Diagnostics or LabCorp for your screenings. TB tests, drug screens, and flu vaccines are covered by Ergo.";
+      return "Please visit Quest Diagnostics or LabCorp for your screenings. TB tests, drug screens, and flu vaccines are covered by PRN Float.";
     } else {
       return "I can help you with questions regarding onboarding, compliance, and platform policies. How else can I assist you?";
     }

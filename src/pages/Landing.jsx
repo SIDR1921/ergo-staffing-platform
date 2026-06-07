@@ -5,6 +5,10 @@ import {
   Zap, Shield, MapPin, Clock, Star, Users, Building2, FileCheck,
   DollarSign, ArrowRight, Sparkles, CheckCircle, BarChart3
 } from 'lucide-react';
+import Logo from '../components/Logo';
+
+// Verticals served, per the platform product spec.
+const VERTICALS = ['EMS', 'NEMT', 'Rehab', 'Nursing', 'DSP / Home Care', 'Allied Health'];
 
 const fadeUp = {
   hidden: { opacity: 0, y: 40 },
@@ -37,7 +41,7 @@ const ROLES = [
 ];
 
 const TESTIMONIALS = [
-  { name: 'Sarah M., RN', text: 'Ergo changed how I work. I pick shifts that fit my life and get paid fast.', stars: 5 },
+  { name: 'Sarah M., RN', text: 'PRN Float changed how I work. I pick shifts that fit my life and get paid fast.', stars: 5 },
   { name: 'Dr. James L., CMO', text: 'Our fill rate went from 72% to 98%. The compliance dashboard saves us 20hrs/week.', stars: 5 },
   { name: 'Maria K., CNA', text: 'I uploaded my resume and the AI filled everything. I was picking up shifts same day.', stars: 5 },
 ];
@@ -54,10 +58,7 @@ export default function Landing() {
     <div style={{ overflow: 'hidden' }}>
       {/* NAVBAR */}
       <nav style={{ position: 'fixed', top: 0, left: 0, right: 0, zIndex: 50, padding: '1rem 2rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: 'rgba(249,249,246,0.85)', backdropFilter: 'blur(16px)', borderBottom: '2px solid var(--color-border)' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-          <div style={{ width: 36, height: 36, background: 'var(--color-accent)', border: '2px solid var(--color-border)', borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-brutal-sm)' }}><Zap size={20} /></div>
-          <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.3rem' }}>ERGO</span>
-        </div>
+        <Logo size={38} />
         <div style={{ display: 'flex', gap: '0.75rem' }}>
           <button className="brutal-button secondary small" onClick={() => navigate('/login')}>LOG IN</button>
           <button className="brutal-button small" onClick={() => navigate('/login')}>GET STARTED <ArrowRight size={14} /></button>
@@ -94,7 +95,7 @@ export default function Landing() {
       {/* FEATURES */}
       <section style={{ padding: '6rem 2rem', maxWidth: '1200px', margin: '0 auto' }}>
         <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }}>
-          <h2 style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '3rem' }}>WHY ERGO?</h2>
+          <h2 style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '3rem' }}>WHY PRN FLOAT?</h2>
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '1.5rem' }}>
           {FEATURES.map((f, i) => (
@@ -110,7 +111,12 @@ export default function Landing() {
       {/* ROLES */}
       <section style={{ padding: '6rem 2rem', background: 'var(--color-text)', color: 'var(--color-bg)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto' }}>
-          <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '3rem', color: '#fff' }}>OPEN ROLES</motion.h2>
+          <motion.h2 variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ fontSize: '3rem', textAlign: 'center', marginBottom: '1rem', color: '#fff' }}>OPEN ROLES</motion.h2>
+          <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem', justifyContent: 'center', marginBottom: '3rem' }}>
+            {VERTICALS.map(v => (
+              <span key={v} className="brutal-badge accent" style={{ fontSize: '0.75rem' }}>{v}</span>
+            ))}
+          </motion.div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1rem' }}>
             {ROLES.map((r, i) => (
               <motion.div key={r.abbr} variants={fadeUp} initial="hidden" whileInView="visible" viewport={{ once: true }} custom={i}
@@ -165,8 +171,8 @@ export default function Landing() {
       {/* FOOTER */}
       <footer style={{ padding: '3rem 2rem', borderTop: '4px solid var(--color-border)', background: 'var(--color-text)', color: 'rgba(255,255,255,0.5)' }}>
         <div style={{ maxWidth: '1200px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}><Zap size={20} color="var(--color-accent)" /><span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, color: '#fff' }}>ERGO</span></div>
-          <div style={{ fontSize: '0.8rem' }}>© 2026 Ergo Healthcare Staffing.</div>
+          <Logo size={30} tone="dark" />
+          <div style={{ fontSize: '0.8rem' }}>© 2026 PRN Float · AI Healthcare Staffing.</div>
           <div style={{ display: 'flex', gap: '1.5rem', fontSize: '0.8rem' }}>
             <a href="#" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Privacy</a>
             <a href="#" style={{ color: 'rgba(255,255,255,0.5)', textDecoration: 'none' }}>Terms</a>

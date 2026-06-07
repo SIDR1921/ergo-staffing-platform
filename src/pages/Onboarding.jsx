@@ -3,13 +3,14 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import {
   CheckCircle, Upload, User, Shield, Briefcase, Heart, FileText,
-  ArrowRight, ArrowLeft, Sparkles, AlertTriangle, Zap, DollarSign, PenTool
+  ArrowRight, ArrowLeft, Sparkles, AlertTriangle, DollarSign, PenTool
 } from 'lucide-react';
 import { db, auth } from '../lib/firebase';
 import { doc, updateDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytes } from 'firebase/storage';
 import { getFunctions, httpsCallable } from 'firebase/functions';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from '../components/Logo';
 
 const STEPS = [
   { id: 'npi', label: 'VERIFICATION', icon: Shield, desc: 'Free NPI validation' },
@@ -54,11 +55,14 @@ export default function Onboarding() {
   // Step 4: BG Check
   const [bgCheckStatus, setBgCheckStatus] = useState('idle'); // idle, loading, cleared
   
-  // Step 5: E-Sign
+  // Step 5: E-Sign — full compliance packet (per platform user-journey spec)
   const agreementsList = [
-    "Independent Contractor Agreement.docx",
-    "Independent Contractor Confidentiality Agreement.docx",
-    "Independent Contractor Non-Disclosure Agreement.docx"
+    { name: 'Independent Contractor Agreement', desc: 'Defines your 1099 contractor relationship, scope of work, and pay terms.' },
+    { name: 'Confidentiality Agreement', desc: 'Protects facility, client, and patient information you access on assignment.' },
+    { name: 'Non-Disclosure Agreement (NDA)', desc: 'Covers proprietary platform and client information.' },
+    { name: 'HIPAA Privacy Agreement', desc: 'Your obligations when handling protected health information (PHI).' },
+    { name: 'EVV Acknowledgment', desc: 'Consent to Electronic Visit Verification (GPS + time capture) during shifts.' },
+    { name: 'Mutual Arbitration Consent', desc: 'Agreement to resolve disputes through binding arbitration.' },
   ];
   const [signatures, setSignatures] = useState({});
   const [signingStatus, setSigningStatus] = useState('idle');
@@ -205,7 +209,8 @@ export default function Onboarding() {
       return;
     }
     if (step === 5) {
-      if (Object.keys(signatures).length < agreementsList.length) {
+      const signedCount = agreementsList.filter(a => (signatures[a.name] || '').trim().length > 2).length;
+      if (signedCount < agreementsList.length) {
         alert("You must sign all agreements.");
         return;
       }
@@ -229,7 +234,7 @@ export default function Onboarding() {
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '2rem' }}>
       <div style={{ width: '100%', maxWidth: '800px', marginBottom: '2rem' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
-          <div style={{ width: 36, height: 36, background: 'var(--color-accent)', border: '2px solid var(--color-border)', borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'var(--shadow-brutal-sm)' }}><Zap size={20} /></div>
+          <Logo variant="mark" size={36} />
           <div>
             <h1 style={{ fontSize: '1.5rem', margin: 0 }}>ONBOARDING</h1>
             <p style={{ fontSize: '0.75rem', color: 'var(--color-text-muted)', margin: 0 }}>STEP {step + 1} OF {STEPS.length}</p>
@@ -393,21 +398,22 @@ export default function Onboarding() {
                 <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', marginBottom: '1.5rem' }}>Please review and digitally sign the following required agreements using SignNow.</p>
                 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                  {agreementsList.map((docName, idx) => (
+                  {agreementsList.map((agr, idx) => (
                     <div key={idx} style={{ padding: '1rem', border: '2px solid var(--color-border)', borderRadius: 'var(--radius-sm)', background: 'var(--color-surface)' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem', fontWeight: 600 }}>
-                        <FileText size={16} /> {docName.replace('.docx', '')}
+                      <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem', fontWeight: 600 }}>
+                        <FileText size={16} /> {agr.name}
                       </div>
+                      <div style={{ fontSize: '0.72rem', color: 'var(--color-text-muted)', marginBottom: '0.5rem', marginLeft: '1.5rem' }}>{agr.desc}</div>
                       <div style={{ display: 'flex', gap: '0.5rem' }}>
-                        <input 
-                          type="text" 
-                          className="brutal-input small" 
-                          placeholder="Type your full legal name to sign" 
-                          value={signatures[docName] || ''} 
-                          onChange={(e) => setSignatures({...signatures, [docName]: e.target.value})} 
+                        <input
+                          type="text"
+                          className="brutal-input small"
+                          placeholder="Type your full legal name to sign"
+                          value={signatures[agr.name] || ''}
+                          onChange={(e) => setSignatures({...signatures, [agr.name]: e.target.value})}
                           style={{ flex: 1 }}
                         />
-                        {signatures[docName]?.length > 2 && <span style={{ color: 'var(--color-success)', alignSelf: 'center' }}><CheckCircle size={18} /></span>}
+                        {signatures[agr.name]?.length > 2 && <span style={{ color: 'var(--color-success)', alignSelf: 'center' }}><CheckCircle size={18} /></span>}
                       </div>
                     </div>
                   ))}

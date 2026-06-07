@@ -58,7 +58,7 @@ export default function CredentialVault() {
       await addDoc(collection(db, 'credentials'), {
         professional_id: userProfile.id,
         document_name: uploadName,
-        document_url: `https://vault.ergo.health/${userProfile.id}/${uploadName.replace(/\s+/g, '_').toLowerCase()}`,
+        document_url: `https://vault.prnfloat.com/${userProfile.id}/${uploadName.replace(/\s+/g, '_').toLowerCase()}`,
         status: 'pending',
         created_at: new Date().toISOString()
       });

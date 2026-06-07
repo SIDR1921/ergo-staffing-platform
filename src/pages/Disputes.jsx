@@ -14,7 +14,7 @@ const MOCK_DISPUTES = [
     messages: [
       { id: 1, sender: 'Sarah Johnson', role: 'professional', text: 'I was on the floor the entire shift. I stepped out briefly at 3 AM to take a call in the hallway.', time: '2026-05-11 09:00' },
       { id: 2, sender: 'Memorial Hospital', role: 'facility', text: 'Our charge nurse reported the unit was unattended. We need to review this further.', time: '2026-05-11 10:30' },
-      { id: 3, sender: 'Ergo Support', role: 'admin', text: 'We are reviewing GPS and clock data. We will request the security footage from the facility.', time: '2026-05-11 14:00' },
+      { id: 3, sender: 'PRN Float Support', role: 'admin', text: 'We are reviewing GPS and clock data. We will request the security footage from the facility.', time: '2026-05-11 14:00' },
     ]
   },
   {
@@ -25,7 +25,7 @@ const MOCK_DISPUTES = [
     outcome: 'RESOLVED — Full payment + 10% bonus issued. Facility flagged for credential-mismatch warning.',
     messages: [
       { id: 1, sender: 'Michael Chen', role: 'professional', text: 'I was reassigned to the memory care wing which requires dementia care certification I don\'t have.', time: '2026-05-09 08:00' },
-      { id: 2, sender: 'Ergo Support', role: 'admin', text: 'We have confirmed the credential mismatch. Full payment will be issued.', time: '2026-05-09 16:00' },
+      { id: 2, sender: 'PRN Float Support', role: 'admin', text: 'We have confirmed the credential mismatch. Full payment will be issued.', time: '2026-05-09 16:00' },
     ]
   },
   {

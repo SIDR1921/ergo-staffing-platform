@@ -10,13 +10,16 @@ admin.initializeApp();
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY || "";
 const SIGNNOW_ACCESS_TOKEN = process.env.SIGNNOW_ACCESS_TOKEN || "";
 
+// Public app URL (used for Stripe redirect links). Defaults to production domain.
+const APP_URL = process.env.APP_URL || "https://prnfloat.com";
+
 // --- 1. AI Concierge ---
-const SYSTEM_PROMPT = `You are Float Assistant, the AI concierge for Ergo, a healthcare staffing platform.
+const SYSTEM_PROMPT = `You are Float Assistant, the AI concierge for PRN Float, a healthcare staffing platform.
 Answer the user's questions based on the following platform policies:
 - SSN: We collect your SSN for background checks and tax reporting (1099). Encrypted with AES-256-GCM.
 - Payments: Direct deposit within 24-48 hours of a completed shift. Instant Pay enabled shifts receive funds within 2 hours.
-- Human Support: Contact support@ergo.health or call (555) 123-4567 (8AM-8PM EST).
-- Labs/Screenings: Visit Quest Diagnostics or LabCorp. TB tests, drug screens, and flu vaccines are covered by Ergo.
+- Human Support: Contact support@ergoconscious.com or call (555) 123-4567 (8AM-8PM EST).
+- Labs/Screenings: Visit Quest Diagnostics or LabCorp. TB tests, drug screens, and flu vaccines are covered by PRN Float.
 Keep your answers brief, professional, and helpful.`;
 
 exports.chatWithAI = functions.https.onCall(async (data, context) => {
@@ -126,8 +129,8 @@ exports.createStripeConnectAccount = functions.https.onCall(async (data, context
     // 2. Create an account link for onboarding
     const accountLink = await stripe.accountLinks.create({
       account: account.id,
-      refresh_url: 'http://localhost:5173/onboarding?stripe=refresh',
-      return_url: 'http://localhost:5173/onboarding?stripe=success',
+      refresh_url: `${APP_URL}/onboarding?stripe=refresh`,
+      return_url: `${APP_URL}/onboarding?stripe=success`,
       type: 'account_onboarding',
     });
 
@@ -166,8 +169,8 @@ exports.sendSignNowInvite = functions.https.onCall(async (data, context) => {
             order: 1
           }
         ],
-        from: 'system@ergo.health',
-        subject: 'Signature Required: Ergo Staffing Agreements',
+        from: 'system@ergoconscious.com',
+        subject: 'Signature Required: PRN Float Staffing Agreements',
         message: 'Please complete the attached documents to finish your onboarding.'
       })
     });

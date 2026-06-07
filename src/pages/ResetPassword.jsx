@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Activity, Key } from 'lucide-react';
+import { Key } from 'lucide-react';
 import { auth } from '../lib/firebase';
+import Logo from '../components/Logo';
 import { verifyPasswordResetCode, confirmPasswordReset } from 'firebase/auth';
 
 export default function ResetPassword() {
@@ -47,10 +48,7 @@ export default function ResetPassword() {
       
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="brutal-card" style={{ width: '100%', maxWidth: '480px' }}>
         <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 'var(--space-md)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '1rem 2rem', border: '2px solid var(--color-border)', boxShadow: '4px 4px 0px var(--color-border)' }}>
-            <Activity size={32} strokeWidth={3} />
-            <h1 style={{ fontSize: '2rem', margin: 0 }}>ERGO</h1>
-          </div>
+          <Logo size={48} />
         </div>
 
         <h2 style={{ fontSize: '1.5rem', textAlign: 'center', marginBottom: '0.5rem' }}>

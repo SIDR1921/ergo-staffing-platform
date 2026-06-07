@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  Zap, LayoutDashboard, Calendar, FileText, Shield, MessageSquare,
+  LayoutDashboard, Calendar, FileText, Shield, MessageSquare,
   AlertTriangle, CreditCard, Building2, Users, Settings, LogOut,
   Menu, X, Star, Briefcase, Send, Gift, FileCheck, ChevronDown, ChevronRight
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
+import Logo from './Logo';
 
 const NAV_SECTIONS = [
   {
@@ -82,23 +83,10 @@ export default function Layout({ children }) {
         <div style={{
           padding: '1.5rem 1.25rem',
           borderBottom: '2px solid rgba(255,255,255,0.1)',
-          display: 'flex', alignItems: 'center', gap: '0.75rem'
         }}>
-          <div style={{
-            width: 36, height: 36, background: 'var(--color-accent)',
-            border: '2px solid #fff', borderRadius: 'var(--radius-sm)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: '2px 2px 0 rgba(255,255,255,0.2)'
-          }}>
-            <Zap size={20} color="#000" />
-          </div>
-          <div>
-            <div style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '1.1rem', color: '#fff' }}>
-              ERGO
-            </div>
-            <div style={{ fontSize: '0.6rem', color: 'var(--color-accent)', letterSpacing: '0.1em' }}>
-              HEALTHCARE STAFFING
-            </div>
+          <Logo size={34} tone="dark" />
+          <div style={{ fontSize: '0.6rem', color: 'var(--color-accent)', letterSpacing: '0.1em', marginTop: '0.4rem', marginLeft: '2.7rem' }}>
+            HEALTHCARE STAFFING
           </div>
         </div>
 

@@ -38,7 +38,7 @@ export default function SecuritySettings() {
       // Firebase TOTP MFA requires Identity Platform and specific configuration.
       // Mocking the QR code step for the prototype
       setTimeout(() => {
-        setQrCodeUrl('otpauth://totp/ERGO:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=ERGO');
+        setQrCodeUrl('otpauth://totp/PRNFloat:user@example.com?secret=JBSWY3DPEHPK3PXP&issuer=PRNFloat');
         setSetupState('verifying');
       }, 1000);
     } catch (err) {
