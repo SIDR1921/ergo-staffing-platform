@@ -4,18 +4,26 @@ import { getFirestore } from 'firebase/firestore';
 import { getStorage } from 'firebase/storage';
 import { getAnalytics, isSupported as analyticsIsSupported } from 'firebase/analytics';
 
-// Firebase web config. These values are NOT secret (security is enforced by
-// Firestore/Storage rules + Auth authorized domains). Env vars override the
-// baked-in defaults so CI / other environments can swap projects if needed.
+// Firebase web config — supplied via environment variables only (never committed).
+// Local dev: a gitignored .env file. CI/CD: GitHub Actions secrets injected at build.
+// See DEPLOYMENT.md for the required VITE_FIREBASE_* keys.
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyBnBl8hlus8uCj64w6H92HAasvBJyTjKlc',
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'ergo-staffing-platform.firebaseapp.com',
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || 'ergo-staffing-platform',
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || 'ergo-staffing-platform.firebasestorage.app',
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || '617023388266',
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || '1:617023388266:web:7aa8c729313105d2c12813',
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || 'G-PVJD400H46'
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
+
+if (!firebaseConfig.apiKey) {
+  // Fail loudly in dev instead of silently rendering a blank app.
+  console.error(
+    '[firebase] Missing VITE_FIREBASE_* environment variables. ' +
+    'Create a local .env (see DEPLOYMENT.md) or set the GitHub Actions secrets.'
+  );
+}
 
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);

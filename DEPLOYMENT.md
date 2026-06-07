@@ -41,11 +41,35 @@ firebase functions:config:set \
 - SignNow: set the templates for the 6 onboarding agreements; the invite email sender is
   `system@ergoconscious.com`.
 
-## 5. Frontend Firebase config (.env)
-The web app reads `VITE_FIREBASE_*` vars at build time (`src/lib/firebase.js`). Keep `authDomain` as the
-Firebase default (`ergo-staffing-platform.firebaseapp.com`) **or** switch it to `prnfloat.com` after the
-custom domain is verified, and add `prnfloat.com` to **Authentication → Settings → Authorized domains**
-(required for Google/Apple sign-in popups to work on the new domain).
+## 5. Frontend Firebase config (env vars — never committed)
+The web app reads `VITE_FIREBASE_*` vars at build time (`src/lib/firebase.js`). These are **not committed
+to the repo**:
+
+- **Local dev:** a gitignored `.env` at the repo root (see the keys below).
+- **CI/CD (this is what deploys prnfloat.com):** GitHub Actions secrets, injected into the build step of
+  both workflows in `.github/workflows/`. **You must add these 7 repository secrets** in
+  GitHub → *Settings → Secrets and variables → Actions → New repository secret*:
+  ```
+  VITE_FIREBASE_API_KEY
+  VITE_FIREBASE_AUTH_DOMAIN
+  VITE_FIREBASE_PROJECT_ID
+  VITE_FIREBASE_STORAGE_BUCKET
+  VITE_FIREBASE_MESSAGING_SENDER_ID
+  VITE_FIREBASE_APP_ID
+  VITE_FIREBASE_MEASUREMENT_ID
+  ```
+  Without them, the CI build produces a **blank** site (the app can't init Firebase).
+
+> ⚠️ **Reality check on "secret":** Vite inlines `VITE_*` vars into the client bundle, so these values are
+> always visible in the deployed JavaScript. Secrets keep them out of your *source repo*, not out of the
+> shipped app. The actual protection is below.
+
+**Secure the API key (the real best practice):**
+1. Google Cloud Console → *APIs & Services → Credentials* → your Browser API key → **Application
+   restrictions → HTTP referrers** → allow only `prnfloat.com/*`, `*.firebaseapp.com/*`, `localhost`.
+2. Enforce **Firestore & Storage security rules** (already in `firestore.rules` / `storage.rules`).
+3. Add `prnfloat.com` to **Authentication → Settings → Authorized domains** (required for Google/Apple
+   sign-in popups on the new domain). Keep `authDomain` as `ergo-staffing-platform.firebaseapp.com`.
 
 ## 6. Native apps (Capacitor)
 - `capacitor.config.json` `server.url` points at the dev server (`localhost:5173`) for live-reload.
