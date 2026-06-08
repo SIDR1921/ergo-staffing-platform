@@ -24,17 +24,21 @@ export function AuthProvider({ children }) {
       const docSnap = await getDoc(docRef);
       
       if (docSnap.exists()) {
-        setUserProfile(docSnap.data());
+        // Always attach the uid as `id` — many components query Firestore by
+        // userProfile.id, which is otherwise undefined on the raw doc data.
+        setUserProfile({ id: firebaseUser.uid, ...docSnap.data() });
       } else {
-        setUserProfile({ 
-          role: 'professional', 
+        setUserProfile({
+          id: firebaseUser.uid,
+          role: 'professional',
           full_name: firebaseUser.displayName || 'User'
         });
       }
     } catch (err) {
       console.error("Error fetching profile:", err);
-      setUserProfile({ 
-        role: 'professional', 
+      setUserProfile({
+        id: firebaseUser.uid,
+        role: 'professional',
         full_name: firebaseUser.displayName || 'User'
       });
     }

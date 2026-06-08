@@ -131,7 +131,7 @@ export default function AIConcierge() {
             {/* Messages */}
             <div ref={scrollRef} style={{ flex: 1, overflowY: 'auto', padding: '1rem', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
               {messages.length === 0 && (
-                <div style={{ padding: '1rem', border: '2px solid var(--color-accent)', borderRadius: 'var(--radius-md)', background: 'rgba(0,229,255,0.05)' }}>
+                <div style={{ padding: '1rem', border: '2px solid var(--color-accent)', borderRadius: 'var(--radius-md)', background: 'rgba(176,164,229,0.05)' }}>
                   <p style={{ fontFamily: 'var(--font-display)', fontWeight: 800, fontSize: '0.85rem', marginBottom: '0.25rem', color: 'var(--color-accent)' }}>Hi! I'm Float Assistant.</p>
                   <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', margin: 0 }}>I can answer questions about onboarding, documents, and policies. Tap a chip or type a question.</p>
                 </div>
@@ -156,7 +156,7 @@ export default function AIConcierge() {
                 <button key={c.label} onClick={() => send(c.q)} disabled={typing}
                   style={{
                     fontSize: '0.7rem', padding: '0.3rem 0.6rem', borderRadius: '9999px',
-                    border: '1px solid var(--color-accent)', background: 'rgba(0,229,255,0.05)',
+                    border: '1px solid var(--color-accent)', background: 'rgba(176,164,229,0.05)',
                     color: 'var(--color-accent-dark)', cursor: 'pointer', fontFamily: 'var(--font-mono)',
                     transition: 'all 0.15s', opacity: typing ? 0.5 : 1
                   }}

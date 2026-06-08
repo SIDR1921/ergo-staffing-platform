@@ -53,7 +53,7 @@ export default function StripeCheckoutButton({ planName, amount, buttonText, isS
 
   if (success) {
     return (
-      <div style={{ padding: '1rem', background: 'rgba(0,255,102,0.1)', color: 'var(--color-success)', border: '1px solid var(--color-success)', borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', fontSize: '0.9rem', fontWeight: 600 }}>
+      <div style={{ padding: '1rem', background: 'rgba(103,217,164,0.1)', color: 'var(--color-success)', border: '1px solid var(--color-success)', borderRadius: 'var(--radius-sm)', display: 'flex', alignItems: 'center', gap: '0.5rem', justifyContent: 'center', fontSize: '0.9rem', fontWeight: 600 }}>
         <CheckCircle size={20} /> Payment Successful
       </div>
     );

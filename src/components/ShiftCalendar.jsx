@@ -93,7 +93,7 @@ export default function ShiftCalendar({ onShiftClick }) {
                 style={{
                   padding: '0.5rem', border: `2px solid ${isSelected ? 'var(--color-accent)' : isToday(day) ? 'var(--color-border)' : 'transparent'}`,
                   borderRadius: 'var(--radius-sm)', cursor: 'pointer', textAlign: 'center', minHeight: '60px',
-                  background: isSelected ? 'rgba(0,229,255,0.1)' : isToday(day) ? 'rgba(0,0,0,0.03)' : 'transparent',
+                  background: isSelected ? 'rgba(176,164,229,0.1)' : isToday(day) ? 'rgba(0,0,0,0.03)' : 'transparent',
                   transition: 'all 0.15s'
                 }}
               >

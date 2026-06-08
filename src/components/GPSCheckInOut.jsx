@@ -94,7 +94,7 @@ export default function GPSCheckInOut() {
   };
 
   return (
-    <motion.div variants={itemVariants} className="brutal-card" style={{ backgroundColor: status === 'checked_in' ? '#0a2e1a' : 'var(--color-surface)', color: status === 'checked_in' ? '#fff' : 'var(--color-text)' }}>
+    <motion.div variants={itemVariants} className="brutal-card" style={{ backgroundColor: status === 'checked_in' ? '#2D2A3E' : 'var(--color-surface)', color: status === 'checked_in' ? '#fff' : 'var(--color-text)' }}>
       <h3 style={{ margin: 0, fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}>
         <Navigation size={18} /> GPS SHIFT TRACKER
       </h3>
@@ -113,18 +113,18 @@ export default function GPSCheckInOut() {
       {status === 'checked_in' && (
         <div>
           <div style={{ display: 'flex', gap: '1rem', marginBottom: '1rem' }}>
-            <div style={{ flex: 1, padding: '0.5rem', border: '2px solid #1a5e2a', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.7rem', color: '#6fdc8c' }}>CHECKED IN</div>
+            <div style={{ flex: 1, padding: '0.5rem', border: '2px solid rgba(103,217,164,0.35)', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.7rem', color: '#67D9A4' }}>CHECKED IN</div>
               <div style={{ fontSize: '1rem', fontWeight: 800 }}>{checkInTime?.toLocaleTimeString()}</div>
             </div>
-            <div style={{ flex: 1, padding: '0.5rem', border: '2px solid #1a5e2a', textAlign: 'center' }}>
-              <div style={{ fontSize: '0.7rem', color: '#6fdc8c' }}>LOCATION</div>
+            <div style={{ flex: 1, padding: '0.5rem', border: '2px solid rgba(103,217,164,0.35)', textAlign: 'center' }}>
+              <div style={{ fontSize: '0.7rem', color: '#67D9A4' }}>LOCATION</div>
               <div style={{ fontSize: '0.8rem', fontWeight: 600 }}>{location?.lat.toFixed(3)}, {location?.lng.toFixed(3)}</div>
             </div>
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', padding: '0.5rem', border: '2px solid #1a5e2a' }}>
-            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#00FF66', animation: 'pulse 2s infinite' }}></div>
-            <span style={{ fontSize: '0.8rem', color: '#6fdc8c' }}>SHIFT ACTIVE — GPS TRACKING LIVE</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem', padding: '0.5rem', border: '2px solid rgba(103,217,164,0.35)' }}>
+            <div style={{ width: '10px', height: '10px', borderRadius: '50%', backgroundColor: '#67D9A4', animation: 'pulse 2s infinite' }}></div>
+            <span style={{ fontSize: '0.8rem', color: '#67D9A4' }}>SHIFT ACTIVE — GPS TRACKING LIVE</span>
           </div>
           <button onClick={handleCheckOut} disabled={loading} className="brutal-button" style={{ width: '100%', backgroundColor: 'var(--color-alert)', color: '#fff' }}>
             <LogOut size={16} /> {loading ? "LOCATING..." : "GPS CHECK-OUT"}

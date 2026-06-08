@@ -169,7 +169,7 @@ export default function ShiftDetail() {
             {/* Clock In/Out */}
             <motion.div variants={itemVariants} className="brutal-card no-hover">
               <h3 style={{ fontSize: '0.9rem', marginBottom: '1rem' }}><Navigation size={14} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '0.5rem' }} />GPS VERIFICATION</h3>
-              <div style={{ padding: '1rem', border: '2px solid var(--color-border)', borderRadius: 'var(--radius-sm)', textAlign: 'center', marginBottom: '1rem', background: clockedIn ? 'rgba(0,255,102,0.1)' : 'rgba(0,0,0,0.02)' }}>
+              <div style={{ padding: '1rem', border: '2px solid var(--color-border)', borderRadius: 'var(--radius-sm)', textAlign: 'center', marginBottom: '1rem', background: clockedIn ? 'rgba(103,217,164,0.1)' : 'rgba(0,0,0,0.02)' }}>
                 <div style={{ width: 48, height: 48, borderRadius: '50%', background: clockedIn ? 'var(--color-success)' : 'var(--color-surface)', border: '2px solid var(--color-border)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 0.5rem' }}>
                   <Navigation size={20} />
                 </div>

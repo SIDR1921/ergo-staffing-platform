@@ -6,7 +6,7 @@ import { useAuth } from '../contexts/AuthContext';
 import Logo from '../components/Logo';
 import { auth, db } from '../lib/firebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export default function Login() {
   const [view, setView] = useState('login');
@@ -23,10 +23,25 @@ export default function Login() {
   const { signIn, signInWithGoogle, signInWithApple, resetPassword } = useAuth();
   const navigate = useNavigate();
 
+  // Map a profile role to its home route.
+  const destFor = (r) => (r === 'facility' ? '/facility' : r === 'admin' ? '/admin' : '/dashboard');
+
+  // Resolve the signed-in user's role from Firestore, then route accordingly —
+  // deterministic, so facility/admin land on the right screen with no flicker.
+  const routeAfterAuth = async (cred) => {
+    try {
+      const snap = await getDoc(doc(db, 'profiles', cred.user.uid));
+      const r = snap.exists() ? (snap.data().role || 'professional') : 'professional';
+      navigate(destFor(r));
+    } catch {
+      navigate('/dashboard');
+    }
+  };
+
   const handleGoogleSignIn = async () => {
     try {
-      await signInWithGoogle();
-      navigate('/dashboard'); // will redirect based on role in reality
+      const cred = await signInWithGoogle();
+      await routeAfterAuth(cred);
     } catch (err) {
       setError(err.message);
     }
@@ -34,8 +49,8 @@ export default function Login() {
 
   const handleAppleSignIn = async () => {
     try {
-      await signInWithApple();
-      navigate('/dashboard');
+      const cred = await signInWithApple();
+      await routeAfterAuth(cred);
     } catch (err) {
       setError(err.message);
     }
@@ -65,14 +80,11 @@ export default function Login() {
         if (role === 'professional') profileData.professional_type = professionalType;
         
         await setDoc(doc(db, 'profiles', user.uid), profileData);
-        
-        alert("Registration successful! Logging you in...");
-        navigate(`/${role}`);
+
+        navigate(destFor(role));
       } else if (view === 'login') {
-        await signIn(email, password);
-        // We'd ideally wait for profile fetch to route properly, 
-        // but for now redirecting to generic dashboard 
-        navigate('/dashboard'); 
+        const cred = await signIn(email, password);
+        await routeAfterAuth(cred);
       }
     } catch (err) { 
       setError(err.message); 

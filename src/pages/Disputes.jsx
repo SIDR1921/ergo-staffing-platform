@@ -154,7 +154,7 @@ export default function Disputes() {
 
                         {/* Outcome */}
                         {d.outcome && (
-                          <div style={{ padding: '1rem', background: 'rgba(0,255,102,0.08)', border: '2px solid var(--color-success)', borderRadius: 'var(--radius-sm)' }}>
+                          <div style={{ padding: '1rem', background: 'rgba(103,217,164,0.08)', border: '2px solid var(--color-success)', borderRadius: 'var(--radius-sm)' }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
                               <CheckCircle size={14} color="var(--color-success)" /><span style={{ fontWeight: 600, fontSize: '0.8rem' }}>OUTCOME</span>
                             </div>

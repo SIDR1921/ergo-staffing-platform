@@ -76,7 +76,7 @@ export default function FacilitiesPage() {
 
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.25rem', marginBottom: '0.75rem' }}>
                 {f.specialties.map(s => (
-                  <span key={s} className="brutal-badge" style={{ fontSize: '0.6rem', background: 'rgba(0,229,255,0.1)', border: '1px solid var(--color-accent)' }}>{s}</span>
+                  <span key={s} className="brutal-badge" style={{ fontSize: '0.6rem', background: 'rgba(176,164,229,0.1)', border: '1px solid var(--color-accent)' }}>{s}</span>
                 ))}
               </div>
 

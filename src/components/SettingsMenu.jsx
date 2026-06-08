@@ -1,10 +1,13 @@
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, User, Settings, CreditCard, LifeBuoy } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { X, User, CreditCard, LifeBuoy, LogOut } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
 export default function SettingsMenu({ isOpen, onClose, onEditProfile }) {
   const { userProfile, signOut } = useAuth();
+  const navigate = useNavigate();
+  const goto = (path) => { onClose(); navigate(path); };
 
   return (
     <AnimatePresence>
@@ -37,8 +40,8 @@ export default function SettingsMenu({ isOpen, onClose, onEditProfile }) {
             }}
           >
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <h2 style={{ margin: 0, fontSize: '2rem' }}>COMMAND MENU</h2>
-              <button onClick={onClose} className="brutal-button secondary" style={{ padding: '0.5rem' }}>
+              <h2 style={{ margin: 0, fontSize: '1.6rem' }}>Account</h2>
+              <button onClick={onClose} aria-label="Close menu" className="brutal-button secondary" style={{ padding: '0.5rem' }}>
                 <X size={24} />
               </button>
             </div>
@@ -48,29 +51,26 @@ export default function SettingsMenu({ isOpen, onClose, onEditProfile }) {
                 <User size={24} />
                 <div>
                   <h3 style={{ margin: 0, fontSize: '1.2rem' }}>{userProfile?.full_name || 'User'}</h3>
-                  <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)' }}>{userProfile?.role.toUpperCase()} PORTAL</span>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', textTransform: 'capitalize' }}>{userProfile?.role || 'professional'} workspace</span>
                 </div>
               </div>
             </div>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-              <button onClick={() => { if (onEditProfile) onEditProfile(); else alert("Edit Profile is available on the Professional Dashboard."); }} className="brutal-button secondary" style={{ justifyContent: 'flex-start', padding: '1rem', border: '2px solid var(--color-border)' }}>
-                <User size={20} style={{ marginRight: '1rem' }} /> EDIT PROFILE
+              <button onClick={() => { if (onEditProfile) { onClose(); onEditProfile(); } else goto('/dashboard'); }} className="brutal-button secondary" style={{ justifyContent: 'flex-start', padding: '1rem', border: '2px solid var(--color-border)' }}>
+                <User size={20} style={{ marginRight: '1rem' }} /> Edit profile
               </button>
-              <button onClick={() => alert("System Preferences are locked in this environment.")} className="brutal-button secondary" style={{ justifyContent: 'flex-start', padding: '1rem', border: '2px solid var(--color-border)' }}>
-                <Settings size={20} style={{ marginRight: '1rem' }} /> SYSTEM PREFERENCES
+              <button onClick={() => goto('/payments')} className="brutal-button secondary" style={{ justifyContent: 'flex-start', padding: '1rem', border: '2px solid var(--color-border)' }}>
+                <CreditCard size={20} style={{ marginRight: '1rem' }} /> Billing &amp; payouts
               </button>
-              <button onClick={() => alert("Billing & Payouts integration via Stripe is active on the main dashboard.")} className="brutal-button secondary" style={{ justifyContent: 'flex-start', padding: '1rem', border: '2px solid var(--color-border)' }}>
-                <CreditCard size={20} style={{ marginRight: '1rem' }} /> BILLING & PAYOUTS
-              </button>
-              <button onClick={() => alert("Support Terminal connecting... Error: Network offline.")} className="brutal-button secondary" style={{ justifyContent: 'flex-start', padding: '1rem', border: '2px solid var(--color-border)' }}>
-                <LifeBuoy size={20} style={{ marginRight: '1rem' }} /> SUPPORT TERMINAL
-              </button>
+              <a href="mailto:support@ergoconscious.com" className="brutal-button secondary" style={{ justifyContent: 'flex-start', padding: '1rem', border: '2px solid var(--color-border)', textDecoration: 'none' }}>
+                <LifeBuoy size={20} style={{ marginRight: '1rem' }} /> Support
+              </a>
             </div>
 
             <div style={{ marginTop: 'auto' }}>
               <button onClick={() => { onClose(); signOut(); }} className="brutal-button" style={{ width: '100%', backgroundColor: 'var(--color-alert)', color: '#fff' }}>
-                TERMINATE SESSION (LOGOUT)
+                <LogOut size={18} /> Sign out
               </button>
             </div>
           </motion.div>

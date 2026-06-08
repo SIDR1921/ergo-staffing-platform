@@ -276,7 +276,7 @@ export default function Onboarding() {
                     </button>
                   </div>
                   {npiStatus === 'verified' && npiData && (
-                    <div style={{ marginTop: '0.5rem', padding: '0.5rem', fontSize: '0.8rem', color: 'var(--color-success)', border: '1px solid var(--color-success)', borderRadius: 'var(--radius-sm)', background: 'rgba(0,255,102,0.1)' }}>
+                    <div style={{ marginTop: '0.5rem', padding: '0.5rem', fontSize: '0.8rem', color: 'var(--color-success)', border: '1px solid var(--color-success)', borderRadius: 'var(--radius-sm)', background: 'rgba(103,217,164,0.1)' }}>
                       <CheckCircle size={14} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '4px' }}/>
                       Verified: {npiData.name} ({npiData.taxonomy})
                     </div>
@@ -310,7 +310,7 @@ export default function Onboarding() {
                   </div>
                 ) : (
                   <div>
-                    <div style={{ padding: '1rem', background: 'rgba(0,255,102,0.1)', border: '2px solid var(--color-success)', borderRadius: 'var(--radius-sm)', marginBottom: '1rem' }}>
+                    <div style={{ padding: '1rem', background: 'rgba(103,217,164,0.1)', border: '2px solid var(--color-success)', borderRadius: 'var(--radius-sm)', marginBottom: '1rem' }}>
                       <CheckCircle size={18} color="var(--color-success)" style={{ display: 'inline', marginRight: '0.5rem' }}/>
                       <span style={{ fontWeight: 600 }}>Parsed successfully! Review extracted fields on next step.</span>
                     </div>
@@ -359,7 +359,7 @@ export default function Onboarding() {
                   <div style={{ color: 'var(--color-accent)' }}>Initiating Secure Stripe Connection...</div>
                 )}
                 {stripeStatus === 'linked' && (
-                  <div style={{ padding: '1rem', border: '2px solid var(--color-success)', background: 'rgba(0,255,102,0.1)', color: 'var(--color-success)', fontWeight: 600, borderRadius: 'var(--radius-sm)' }}>
+                  <div style={{ padding: '1rem', border: '2px solid var(--color-success)', background: 'rgba(103,217,164,0.1)', color: 'var(--color-success)', fontWeight: 600, borderRadius: 'var(--radius-sm)' }}>
                     <CheckCircle size={18} style={{ display: 'inline', verticalAlign: 'text-bottom' }} /> Stripe Account Connected & Identity Verified
                   </div>
                 )}

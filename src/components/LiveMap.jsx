@@ -15,29 +15,23 @@ const center = {
   lng: -74.0060
 };
 
-// Brutalist/Dark aesthetic map style
-const darkMapStyle = [
-  { elementType: "geometry", stylers: [{ color: "#212121" }] },
+// Soft lavender map style — matches the PRN Float light glass aesthetic.
+const lavenderMapStyle = [
+  { elementType: "geometry", stylers: [{ color: "#F2EEFB" }] },
   { elementType: "labels.icon", stylers: [{ visibility: "off" }] },
-  { elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
-  { elementType: "labels.text.stroke", stylers: [{ color: "#212121" }] },
-  { featureType: "administrative", elementType: "geometry", stylers: [{ color: "#757575" }] },
-  { featureType: "administrative.country", elementType: "labels.text.fill", stylers: [{ color: "#9e9e9e" }] },
+  { elementType: "labels.text.fill", stylers: [{ color: "#7E7C90" }] },
+  { elementType: "labels.text.stroke", stylers: [{ color: "#FFFFFF" }] },
+  { featureType: "administrative", elementType: "geometry", stylers: [{ color: "#C9BFF0" }] },
   { featureType: "administrative.land_parcel", stylers: [{ visibility: "off" }] },
-  { featureType: "administrative.locality", elementType: "labels.text.fill", stylers: [{ color: "#bdbdbd" }] },
-  { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
-  { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#181818" }] },
-  { featureType: "poi.park", elementType: "labels.text.fill", stylers: [{ color: "#616161" }] },
-  { featureType: "poi.park", elementType: "labels.text.stroke", stylers: [{ color: "#1b1b1b" }] },
-  { featureType: "road", elementType: "geometry.fill", stylers: [{ color: "#2c2c2c" }] },
-  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#8a8a8a" }] },
-  { featureType: "road.arterial", elementType: "geometry", stylers: [{ color: "#373737" }] },
-  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#3c3c3c" }] },
-  { featureType: "road.highway.controlled_access", elementType: "geometry", stylers: [{ color: "#4e4e4e" }] },
-  { featureType: "road.local", elementType: "labels.text.fill", stylers: [{ color: "#616161" }] },
-  { featureType: "transit", elementType: "labels.text.fill", stylers: [{ color: "#757575" }] },
-  { featureType: "water", elementType: "geometry", stylers: [{ color: "#000000" }] },
-  { featureType: "water", elementType: "labels.text.fill", stylers: [{ color: "#3d3d3d" }] }
+  { featureType: "poi", elementType: "geometry", stylers: [{ color: "#E5DFF8" }] },
+  { featureType: "poi", elementType: "labels.text.fill", stylers: [{ color: "#8475C8" }] },
+  { featureType: "poi.park", elementType: "geometry", stylers: [{ color: "#D9F0E4" }] },
+  { featureType: "road", elementType: "geometry", stylers: [{ color: "#FFFFFF" }] },
+  { featureType: "road.arterial", elementType: "geometry", stylers: [{ color: "#F7F5FC" }] },
+  { featureType: "road.highway", elementType: "geometry", stylers: [{ color: "#E0DBF8" }] },
+  { featureType: "road", elementType: "labels.text.fill", stylers: [{ color: "#9E97B5" }] },
+  { featureType: "transit", stylers: [{ visibility: "off" }] },
+  { featureType: "water", elementType: "geometry", stylers: [{ color: "#C9BFF0" }] }
 ];
 
 const itemVariants = {
@@ -71,7 +65,7 @@ export default function LiveMap() {
   return (
     <motion.div variants={itemVariants} className="brutal-card" style={{ padding: 'var(--space-sm)' }}>
       <h3 style={{ margin: 0, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0 0.5rem' }}>
-        <Map size={18} /> GPS TELEMETRY
+        <Map size={18} /> Live workforce map
       </h3>
       {isLoaded ? (
         <GoogleMap
@@ -79,7 +73,7 @@ export default function LiveMap() {
           center={center}
           zoom={14}
           options={{
-            styles: darkMapStyle,
+            styles: lavenderMapStyle,
             disableDefaultUI: true,
             zoomControl: true,
           }}
@@ -90,18 +84,18 @@ export default function LiveMap() {
               position={{ lat: pro.lat, lng: pro.lng }} 
               icon={{
                 path: 'M -10,0 A 10,10 0 1,1 10,0 A 10,10 0 1,1 -10,0',
-                fillColor: 'var(--color-accent)',
+                fillColor: '#8475C8',
                 fillOpacity: 1,
                 strokeWeight: 2,
-                strokeColor: '#000',
+                strokeColor: '#FFFFFF',
                 scale: 0.8
               }}
             />
           ))}
         </GoogleMap>
       ) : (
-        <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#000', color: 'var(--color-accent)', border: '2px solid var(--color-border)', borderRadius: '8px' }}>
-          INITIALIZING MAP SATELLITES...
+        <div style={{ height: '400px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--color-accent-light)', color: 'var(--color-accent-dark)', border: '2px solid var(--color-border)', borderRadius: '8px', fontWeight: 600 }}>
+          Loading map…
         </div>
       )}
     </motion.div>

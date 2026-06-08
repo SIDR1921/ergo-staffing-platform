@@ -18,6 +18,18 @@ const sections = [
   { id: 'emergency', label: 'EMERGENCY', icon: <Phone size={14} /> },
 ];
 
+// Module-level so its identity is stable across renders — defining this inside
+// the component remounts every input on each keystroke (focus loss).
+function Field({ profile, setProfile, label, field, type = 'text', placeholder = '' }) {
+  const id = `pf-${field}`;
+  return (
+    <div style={{ marginBottom: '1rem' }}>
+      <label htmlFor={id} style={{ display: 'block', fontWeight: 600, marginBottom: '0.25rem', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>{label}</label>
+      <input id={id} type={type} className="brutal-input" placeholder={placeholder} value={profile[field]} onChange={e => setProfile(prev => ({ ...prev, [field]: e.target.value }))} />
+    </div>
+  );
+}
+
 export default function ProfileEditor({ isOpen, onClose }) {
   const { userProfile } = useAuth();
   const [activeSection, setActiveSection] = useState('details');
@@ -31,56 +43,36 @@ export default function ProfileEditor({ isOpen, onClose }) {
     references: ''
   });
 
+  const [savedMsg, setSavedMsg] = useState(null);
+
   useEffect(() => {
     if (userProfile) {
-      setProfile(prev => ({
-        ...prev,
-        full_name: userProfile.full_name || '',
-        professional_type: userProfile.professional_type || '',
-        phone: userProfile.phone || '',
-        address: userProfile.address || '',
-        license_number: userProfile.license_number || '',
-        license_state: userProfile.license_state || '',
-        npi_number: userProfile.npi_number || '',
-        emergency_name: userProfile.emergency_name || '',
-        emergency_phone: userProfile.emergency_phone || '',
-        emergency_relationship: userProfile.emergency_relationship || '',
-      }));
+      // Hydrate every editable field so existing values show on open.
+      setProfile(prev => Object.keys(prev).reduce((acc, key) => {
+        acc[key] = userProfile[key] ?? prev[key] ?? '';
+        return acc;
+      }, { ...prev }));
     }
   }, [userProfile]);
 
   const handleSave = async () => {
     if (!userProfile?.id) return;
     setSaving(true);
+    setSavedMsg(null);
     try {
-      await updateDoc(doc(db, 'profiles', userProfile.id), {
-        full_name: profile.full_name,
-        phone: profile.phone,
-        address: profile.address,
-        professional_type: profile.professional_type,
-        license_number: profile.license_number,
-        license_state: profile.license_state,
-        npi_number: profile.npi_number,
-        emergency_name: profile.emergency_name,
-        emergency_phone: profile.emergency_phone,
-        emergency_relationship: profile.emergency_relationship,
-      });
-      alert("Profile saved successfully!");
-    } catch(error) {
-      alert("Error saving: " + error.message);
+      // Persist the full profile object (previously DOB / education / work /
+      // references were collected but silently dropped on save).
+      await updateDoc(doc(db, 'profiles', userProfile.id), { ...profile });
+      setSavedMsg({ ok: true, text: 'Profile saved' });
+      setTimeout(() => setSavedMsg(null), 2500);
+    } catch (error) {
+      setSavedMsg({ ok: false, text: 'Error saving: ' + error.message });
     } finally {
       setSaving(false);
     }
   };
 
   if (!isOpen) return null;
-
-  const Field = ({ label, field, type = 'text', placeholder = '' }) => (
-    <div style={{ marginBottom: '1rem' }}>
-      <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.25rem', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>{label}</label>
-      <input type={type} className="brutal-input" placeholder={placeholder} value={profile[field]} onChange={e => setProfile({ ...profile, [field]: e.target.value })} />
-    </div>
-  );
 
   return (
     <>
@@ -110,7 +102,7 @@ export default function ProfileEditor({ isOpen, onClose }) {
         {/* Details */}
         {activeSection === 'details' && (
           <div>
-            <Field label="FULL LEGAL NAME" field="full_name" placeholder="Jane Doe" />
+            <Field profile={profile} setProfile={setProfile} label="FULL LEGAL NAME" field="full_name" placeholder="Jane Doe" />
             <div>
               <label style={{ display: 'block', fontWeight: 600, marginBottom: '0.25rem', fontFamily: 'var(--font-mono)', fontSize: '0.8rem' }}>SPECIALTY TYPE</label>
               <select className="brutal-input" value={profile.professional_type} onChange={e => setProfile({...profile, professional_type: e.target.value})}>
@@ -120,18 +112,18 @@ export default function ProfileEditor({ isOpen, onClose }) {
                 <option value="ems">EMS (EMT/Paramedic)</option>
               </select>
             </div>
-            <Field label="PHONE NUMBER" field="phone" type="tel" placeholder="+1 (555) 000-0000" />
-            <Field label="ADDRESS" field="address" placeholder="123 Main St, City, State" />
-            <Field label="DATE OF BIRTH" field="date_of_birth" type="date" />
+            <Field profile={profile} setProfile={setProfile} label="PHONE NUMBER" field="phone" type="tel" placeholder="+1 (555) 000-0000" />
+            <Field profile={profile} setProfile={setProfile} label="ADDRESS" field="address" placeholder="123 Main St, City, State" />
+            <Field profile={profile} setProfile={setProfile} label="DATE OF BIRTH" field="date_of_birth" type="date" />
           </div>
         )}
 
         {/* Licenses */}
         {activeSection === 'licenses' && (
           <div>
-            <Field label="STATE LICENSE #" field="license_number" placeholder="RN-123456" />
-            <Field label="ISSUING STATE" field="license_state" placeholder="California" />
-            <Field label="NPI NUMBER" field="npi_number" placeholder="1234567890" />
+            <Field profile={profile} setProfile={setProfile} label="STATE LICENSE #" field="license_number" placeholder="RN-123456" />
+            <Field profile={profile} setProfile={setProfile} label="ISSUING STATE" field="license_state" placeholder="California" />
+            <Field profile={profile} setProfile={setProfile} label="NPI NUMBER" field="npi_number" placeholder="1234567890" />
             <div style={{ padding: '1rem', border: '2px dashed var(--color-accent)', marginTop: '1rem' }}>
               <p style={{ fontSize: '0.8rem', color: 'var(--color-text-muted)', margin: 0 }}>
                 <Shield size={14} style={{ display: 'inline', verticalAlign: 'text-bottom', marginRight: '0.25rem' }} />
@@ -144,19 +136,19 @@ export default function ProfileEditor({ isOpen, onClose }) {
         {/* Education */}
         {activeSection === 'education' && (
           <div>
-            <Field label="INSTITUTION NAME" field="education_institution" placeholder="University of Healthcare" />
-            <Field label="DEGREE / CERTIFICATION" field="education_degree" placeholder="BSN, Nursing" />
-            <Field label="GRADUATION YEAR" field="education_year" type="number" placeholder="2020" />
+            <Field profile={profile} setProfile={setProfile} label="INSTITUTION NAME" field="education_institution" placeholder="University of Healthcare" />
+            <Field profile={profile} setProfile={setProfile} label="DEGREE / CERTIFICATION" field="education_degree" placeholder="BSN, Nursing" />
+            <Field profile={profile} setProfile={setProfile} label="GRADUATION YEAR" field="education_year" type="number" placeholder="2020" />
           </div>
         )}
 
         {/* Work History */}
         {activeSection === 'work' && (
           <div>
-            <Field label="PREVIOUS EMPLOYER" field="work_employer" placeholder="St. Mary's Hospital" />
-            <Field label="ROLE / POSITION" field="work_role" placeholder="Registered Nurse - ICU" />
-            <Field label="YEARS OF EXPERIENCE" field="work_years" type="number" placeholder="5" />
-            <Field label="REFERENCES (Name, Phone)" field="references" placeholder="Dr. Smith, (555) 123-4567" />
+            <Field profile={profile} setProfile={setProfile} label="PREVIOUS EMPLOYER" field="work_employer" placeholder="St. Mary's Hospital" />
+            <Field profile={profile} setProfile={setProfile} label="ROLE / POSITION" field="work_role" placeholder="Registered Nurse - ICU" />
+            <Field profile={profile} setProfile={setProfile} label="YEARS OF EXPERIENCE" field="work_years" type="number" placeholder="5" />
+            <Field profile={profile} setProfile={setProfile} label="REFERENCES (Name, Phone)" field="references" placeholder="Dr. Smith, (555) 123-4567" />
           </div>
         )}
 
@@ -167,16 +159,24 @@ export default function ProfileEditor({ isOpen, onClose }) {
               <AlertTriangle size={16} color="var(--color-alert)" />
               <span style={{ fontSize: '0.8rem' }}>Required for HIPAA-compliant shift assignments.</span>
             </div>
-            <Field label="EMERGENCY CONTACT NAME" field="emergency_name" placeholder="John Doe" />
-            <Field label="EMERGENCY PHONE" field="emergency_phone" type="tel" placeholder="+1 (555) 000-0000" />
-            <Field label="RELATIONSHIP" field="emergency_relationship" placeholder="Spouse" />
+            <Field profile={profile} setProfile={setProfile} label="EMERGENCY CONTACT NAME" field="emergency_name" placeholder="John Doe" />
+            <Field profile={profile} setProfile={setProfile} label="EMERGENCY PHONE" field="emergency_phone" type="tel" placeholder="+1 (555) 000-0000" />
+            <Field profile={profile} setProfile={setProfile} label="RELATIONSHIP" field="emergency_relationship" placeholder="Spouse" />
           </div>
         )}
 
         {/* Save Button */}
-        <button onClick={handleSave} disabled={saving} className="brutal-button" style={{ width: '100%', marginTop: 'auto', paddingTop: '1rem' }}>
-          <Save size={16} /> {saving ? "SAVING..." : "SAVE PROFILE"}
-        </button>
+        <div style={{ marginTop: 'auto' }}>
+          {savedMsg && (
+            <div style={{ textAlign: 'center', marginBottom: '0.6rem', fontSize: '0.85rem', fontWeight: 600,
+              color: savedMsg.ok ? 'var(--color-success)' : 'var(--color-alert)' }}>
+              {savedMsg.text}
+            </div>
+          )}
+          <button onClick={handleSave} disabled={saving} className="brutal-button" style={{ width: '100%' }}>
+            <Save size={16} /> {saving ? 'Saving…' : 'Save profile'}
+          </button>
+        </div>
       </motion.div>
     </>
   );

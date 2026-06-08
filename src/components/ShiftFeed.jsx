@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MapPin, Calendar, Clock, CheckCircle, XCircle, List, Zap, Star } from 'lucide-react';
+import { MapPin, Calendar, Clock, CheckCircle, XCircle, List, Activity, Star } from 'lucide-react';
 import { db } from '../lib/firebase';
 import { collection, query, where, orderBy, onSnapshot, addDoc, getDocs, doc, getDoc } from 'firebase/firestore';
 import { useAuth } from '../contexts/AuthContext';
@@ -102,7 +102,7 @@ export default function ShiftFeed() {
   };
 
   const tabs = [
-    { id: 'available', label: 'AVAILABLE', icon: <Zap size={14} /> },
+    { id: 'available', label: 'AVAILABLE', icon: <Activity size={14} /> },
     { id: 'my_shifts', label: 'MY SHIFTS', icon: <List size={14} /> }
   ];
 
@@ -113,7 +113,7 @@ export default function ShiftFeed() {
           {activeTab === 'available' ? 'AVAILABLE SHIFTS' : 'MY SHIFTS'}
         </h2>
         <p style={{ color: 'var(--color-text-muted)' }}>
-          {loading ? "SEARCHING NETWORK..." : activeTab === 'available' ? `MATCHING ALGORITHM ACTIVE // ${shifts.length} MATCHES` : `${myApplications.length} RECORDS`}
+          {loading ? "Finding shifts near you…" : activeTab === 'available' ? `${shifts.length} shifts matched to you` : `${myApplications.length} shifts`}
         </p>
       </motion.div>
 

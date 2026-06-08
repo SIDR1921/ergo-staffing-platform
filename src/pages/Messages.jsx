@@ -57,7 +57,7 @@ export default function Messages() {
             <div style={{ flex: 1, overflowY: 'auto' }}>
               {filteredThreads.map(t => (
                 <div key={t.id} onClick={() => setSelectedThread(t.id)}
-                  style={{ padding: '1rem', borderBottom: '2px solid var(--color-border)', cursor: 'pointer', background: selectedThread === t.id ? 'rgba(0,229,255,0.08)' : 'transparent', borderLeft: selectedThread === t.id ? '3px solid var(--color-accent)' : '3px solid transparent', transition: 'all 0.15s' }}>
+                  style={{ padding: '1rem', borderBottom: '2px solid var(--color-border)', cursor: 'pointer', background: selectedThread === t.id ? 'rgba(176,164,229,0.08)' : 'transparent', borderLeft: selectedThread === t.id ? '3px solid var(--color-accent)' : '3px solid transparent', transition: 'all 0.15s' }}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.25rem' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                       {t.role === 'facility' ? <Building2 size={14} /> : <User size={14} />}

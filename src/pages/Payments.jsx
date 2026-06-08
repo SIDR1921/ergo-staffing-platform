@@ -82,7 +82,7 @@ export default function Payments() {
           <h3 style={{ fontSize: '1rem', marginBottom: '1rem' }}>EARNINGS TREND</h3>
           <div style={{ display: 'flex', alignItems: 'flex-end', gap: '0.5rem', height: '120px' }}>
             {[40, 65, 55, 80, 70, 90, 85, 95, 60, 75, 88, 70].map((h, i) => (
-              <div key={i} style={{ flex: 1, background: i === 11 ? 'var(--color-accent)' : 'rgba(0,229,255,0.3)', height: `${h}%`, border: '2px solid var(--color-border)', borderRadius: 'var(--radius-sm) var(--radius-sm) 0 0', transition: 'all 0.3s' }} />
+              <div key={i} style={{ flex: 1, background: i === 11 ? 'var(--color-accent)' : 'rgba(176,164,229,0.3)', height: `${h}%`, border: '2px solid var(--color-border)', borderRadius: 'var(--radius-sm) var(--radius-sm) 0 0', transition: 'all 0.3s' }} />
             ))}
           </div>
           <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '0.5rem' }}>
