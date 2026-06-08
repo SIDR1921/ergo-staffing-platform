@@ -384,7 +384,7 @@ export default function Onboarding() {
                   )}
                   {bgCheckStatus === 'cleared' && (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', color: 'var(--color-success)', fontWeight: 600 }}>
-                      <CheckCircle size={24} /> CLEARANCE GRANTED
+                      <CheckCircle size={24} /> Background check cleared
                     </div>
                   )}
                 </div>

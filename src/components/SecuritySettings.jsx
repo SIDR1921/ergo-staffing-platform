@@ -52,13 +52,12 @@ export default function SecuritySettings() {
     setError(null);
 
     try {
-      // Mocking the verification for prototype since full GCIP requires Blaze
+      // Demo verification (full TOTP enrollment requires the Blaze plan / GCIP).
       if (verificationCode.length === 6) {
         setIsMfaEnabled(true);
         setSetupState('idle');
-        alert("Two-Factor Authentication successfully enabled!");
       } else {
-        throw new Error("Invalid verification code.");
+        throw new Error("Enter the 6-digit code from your authenticator app.");
       }
     } catch (err) {
       setError(err.message);
@@ -69,22 +68,20 @@ export default function SecuritySettings() {
     <motion.div variants={itemVariants} className="brutal-card" style={{ backgroundColor: 'var(--color-bg)', color: 'var(--color-text)' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
         <h3 style={{ margin: 0, fontSize: '1.1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Shield size={18} /> SECURITY CLEARANCE
+          <Shield size={18} /> Security
         </h3>
         {isMfaEnabled ? (
-          <span className="brutal-badge" style={{ backgroundColor: 'var(--color-success)', color: '#000', border: 'none' }}>
-            <CheckCircle size={12} style={{ display: 'inline', marginRight: '4px' }} /> SECURE
+          <span className="brutal-badge success">
+            <CheckCircle size={12} style={{ display: 'inline', marginRight: '4px' }} /> Secure
           </span>
         ) : (
-          <span className="brutal-badge" style={{ backgroundColor: 'var(--color-alert)', color: '#fff', border: 'none' }}>
-            AT RISK
-          </span>
+          <span className="brutal-badge alert">At risk</span>
         )}
       </div>
 
       <div style={{ padding: '1rem', border: '2px solid var(--color-border)', backgroundColor: 'var(--color-surface)' }}>
         <h4 style={{ margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <Lock size={16} /> TWO-FACTOR AUTHENTICATION
+          <Lock size={16} /> Two-factor authentication
         </h4>
         <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginBottom: '1rem' }}>
           Require a 6-digit code from your authenticator app to log in. Required for HIPAA compliance.
@@ -97,12 +94,12 @@ export default function SecuritySettings() {
         )}
 
         {isMfaEnabled ? (
-          <button className="brutal-button secondary" disabled style={{ width: '100%', opacity: 0.5 }}>
-            2FA ENABLED
+          <button className="brutal-button secondary" disabled style={{ width: '100%', opacity: 0.6 }}>
+            <CheckCircle size={15} /> 2FA enabled
           </button>
         ) : setupState === 'idle' ? (
-          <button onClick={handleEnroll} className="brutal-button" style={{ width: '100%', backgroundColor: 'var(--color-accent)' }}>
-            ENROLL IN 2FA
+          <button onClick={handleEnroll} className="brutal-button" style={{ width: '100%' }}>
+            Enable 2FA
           </button>
         ) : setupState === 'verifying' ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
@@ -124,12 +121,12 @@ export default function SecuritySettings() {
                 required
               />
               <button type="submit" className="brutal-button" style={{ padding: '0.5rem 1rem' }}>
-                VERIFY
+                Verify
               </button>
             </form>
           </div>
         ) : (
-          <div style={{ textAlign: 'center', padding: '1rem' }}>GENERATING SECURE KEY...</div>
+          <div style={{ textAlign: 'center', padding: '1rem' }}>Generating secure key…</div>
         )}
       </div>
     </motion.div>

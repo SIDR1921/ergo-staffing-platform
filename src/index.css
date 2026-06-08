@@ -496,6 +496,27 @@ select.brutal-input { cursor: pointer; }
 }
 @media (max-width: 768px) {
   :root { --space-md: 1.5rem; --space-lg: 2.5rem; }
+
+  /* Stack any inline multi-column grid inside the app shell on phones.
+     (Overrides the inline grid-template-columns set across the pages.) */
+  .brutal-main [style*="grid-template-columns"] { grid-template-columns: 1fr !important; }
+
+  /* Wide tables scroll horizontally instead of overflowing the viewport. */
+  .brutal-main .brutal-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Tame oversized editorial headings on small screens. */
+  .brutal-main h1 { font-size: clamp(1.9rem, 8.5vw, 2.6rem) !important; }
+  .brutal-main h2 { font-size: clamp(1.7rem, 7.5vw, 2.3rem) !important; }
+  .brutal-metric-value { font-size: 2rem; }
+
+  /* Full-width toasts on phones so they never overflow. */
+  .brutal-toast-container { left: 1rem; right: 1rem; bottom: 1rem; }
+  .brutal-toast { min-width: 0; max-width: none; }
 }
 
 /* ─── Scrollbar ─── */

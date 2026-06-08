@@ -174,8 +174,8 @@ export default function FacilityDashboard() {
         {/* Left Column */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
           <motion.div variants={itemVariants}>
-            <h2 style={{ fontSize: '3rem', marginBottom: 'var(--space-xs)' }}>SHIFT COMMAND</h2>
-            <p style={{ color: 'var(--color-text-muted)' }}>MONITORING NETWORK RESPONSES</p>
+            <h2 style={{ fontSize: '3rem', marginBottom: 'var(--space-xs)' }}>Staffing overview</h2>
+            <p style={{ color: 'var(--color-text-muted)' }}>Live view of your open shifts and clinician responses.</p>
           </motion.div>
 
           <LiveMap />
@@ -227,7 +227,7 @@ export default function FacilityDashboard() {
           {pendingApps.length > 0 && (
             <motion.div variants={itemVariants}>
               <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                <Users size={20} /> PENDING APPLICANTS
+                <Users size={20} /> Pending applicants
               </h3>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
                 {pendingApps.map(app => (
@@ -257,7 +257,7 @@ export default function FacilityDashboard() {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
           <motion.div variants={itemVariants} className="brutal-card" style={{ backgroundColor: 'var(--color-accent)' }}>
             <h3 style={{ margin: 0, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <PlusCircle size={18} /> BROADCAST SHIFT
+              <PlusCircle size={18} /> Post a shift
             </h3>
             <form onSubmit={handlePostShift} style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               <div>
@@ -300,14 +300,14 @@ export default function FacilityDashboard() {
                 <input type="checkbox" checked={newShift.is_urgent} onChange={e => setNewShift({...newShift, is_urgent: e.target.checked})} style={{ width: '18px', height: '18px' }} />
                 MARK AS URGENT
               </label>
-              <button type="submit" className="brutal-button" style={{ backgroundColor: 'var(--color-surface)' }}>PUBLISH TO NETWORK</button>
+              <button type="submit" className="brutal-button">Publish shift</button>
             </form>
           </motion.div>
 
           {/* Payment Overview */}
           <motion.div variants={itemVariants} className="brutal-card">
             <h3 style={{ margin: 0, marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <DollarSign size={18} /> PAYMENT OVERVIEW
+              <DollarSign size={18} /> Payment overview
             </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0.5rem', border: '2px solid var(--color-border)' }}>
